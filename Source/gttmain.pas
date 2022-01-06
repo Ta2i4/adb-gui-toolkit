@@ -8,7 +8,7 @@ uses
   System.Actions, System.Generics.Collections, System.Threading,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.Samples.Spin, Vcl.ActnList, Vcl.ExtCtrls,
-  ConsoleEmulator{, ADBExerciser};
+  ConsoleEmulator;
 
 type
 
@@ -68,7 +68,7 @@ type
     procedure chk3Click(Sender: TObject);
   private
     { Private declarations }
-    MyTasks, MyAppTasks: array [0..1] of ITask; {array [0..1]}
+    MyTasks, MyAppTasks: array [0..1] of ITask;
     procedure LoadOptions;
     procedure SaveOptions;
     procedure InitializeDevicesList;
@@ -495,8 +495,8 @@ begin
       end
     )
   else begin
-    Application.MessageBox('Не удалось запустить интерфейс ADB.' + #13#10#13#10
-      + 'Программа будет завершена.', 'Ошибка', MB_OK + MB_ICONSTOP);
+    Application.MessageBox('Failed to run ADB interface.' + #13#10#13#10
+      + 'Program will be closed.', 'Error', MB_OK + MB_ICONSTOP);
     Application.Terminate;
   end;
 end;
