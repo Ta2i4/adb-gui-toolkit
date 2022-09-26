@@ -23,9 +23,100 @@ object GTTMainWnd: TGTTMainWnd
     Top = 0
     Width = 600
     Height = 400
-    ActivePage = ts1
+    ActivePage = ts2
     Align = alClient
     TabOrder = 0
+    object ts2: TTabSheet
+      Caption = 'ADB Tools'
+      ImageIndex = 2
+      object grp6: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 300
+        Height = 372
+        Align = alLeft
+        Caption = 'List of connected devices'
+        TabOrder = 0
+        ExplicitLeft = 8
+        object lst2: TListBox
+          Left = 2
+          Top = 15
+          Width = 296
+          Height = 330
+          Align = alClient
+          ItemHeight = 13
+          MultiSelect = True
+          TabOrder = 1
+        end
+        object btn7: TButton
+          Left = 2
+          Top = 345
+          Width = 296
+          Height = 25
+          Action = actRefreshDev
+          Align = alBottom
+          TabOrder = 0
+        end
+      end
+      object grp7: TGroupBox
+        Left = 310
+        Top = 0
+        Width = 270
+        Height = 370
+        Caption = 'Apps list'
+        TabOrder = 1
+        object lbl5: TLabel
+          Left = 10
+          Top = 50
+          Width = 61
+          Height = 13
+          Caption = 'Apps list [*]:'
+        end
+        object lbl6: TLabel
+          Left = 10
+          Top = 310
+          Width = 219
+          Height = 27
+          Caption = 
+            '[*] This list displays only those apps that are simultaneously i' +
+            'nstalled on all connected devices.'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -10
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          WordWrap = True
+        end
+        object btn8: TButton
+          Left = 10
+          Top = 20
+          Width = 250
+          Height = 25
+          Action = actGetAppList
+          Caption = 'Get apps list'
+          Enabled = False
+          TabOrder = 0
+        end
+        object btn9: TButton
+          Left = 10
+          Top = 340
+          Width = 250
+          Height = 25
+          Action = actSaveAppsList
+          Caption = 'Save apps list to file'
+          TabOrder = 2
+        end
+        object lst3: TListBox
+          Left = 10
+          Top = 70
+          Width = 250
+          Height = 230
+          ItemHeight = 13
+          TabOrder = 1
+        end
+      end
+    end
     object ts1: TTabSheet
       Caption = 'Monkey stress test'
       object grp3: TGroupBox
@@ -45,6 +136,8 @@ object GTTMainWnd: TGTTMainWnd
           ItemHeight = 13
           MultiSelect = True
           TabOrder = 1
+          ExplicitLeft = 3
+          ExplicitTop = 9
         end
         object btn1: TButton
           Left = 2
@@ -53,7 +146,6 @@ object GTTMainWnd: TGTTMainWnd
           Height = 25
           Action = actRefreshDev
           Align = alBottom
-          Caption = 'Update list of devices'
           TabOrder = 0
         end
       end
@@ -96,7 +188,7 @@ object GTTMainWnd: TGTTMainWnd
           OnClick = chk2Click
         end
       end
-      object GroupBox1: TGroupBox
+      object grp5: TGroupBox
         Left = 310
         Top = 115
         Width = 270
@@ -106,18 +198,18 @@ object GTTMainWnd: TGTTMainWnd
         object lbl2: TLabel
           Left = 10
           Top = 50
-          Width = 160
+          Width = 127
           Height = 13
-          Caption = 'Please, select the application [*]:'
+          Caption = 'Please, select the app [*]:'
         end
         object lbl3: TLabel
           Left = 10
           Top = 160
-          Width = 232
+          Width = 219
           Height = 24
           Caption = 
-            '[*] This list displays only those applications that are simultan' +
-            'eously installed on all connected devices.'
+            '[*] This list displays only those apps that are simultaneously i' +
+            'nstalled on all connected devices.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -10
@@ -132,7 +224,7 @@ object GTTMainWnd: TGTTMainWnd
           Width = 250
           Height = 25
           Action = actGetAppList
-          Caption = 'Load applications list'
+          Caption = 'Get apps list'
           Enabled = False
           TabOrder = 0
         end
@@ -229,6 +321,8 @@ object GTTMainWnd: TGTTMainWnd
             'Maximal')
           TabOrder = 2
           OnClick = rg1Click
+          ExplicitLeft = 3
+          ExplicitTop = 194
         end
         object rg0: TRadioGroup
           Left = 2
@@ -272,8 +366,7 @@ object GTTMainWnd: TGTTMainWnd
           Top = 24
           Width = 289
           Height = 17
-          Hint = #1055#1088#1080' '#1074#1082#1083#1102#1095#1077#1085#1085#1086#1081' '#1086#1087#1094#1080#1080' '#1087#1088#1080#1083#1086#1078#1077#1085#1080#1077' '#1084#1086#1078#1077#1090' '#1079#1072#1087#1091#1089#1082#1072#1090#1100#1089#1103' '#1076#1086#1083#1100#1096#1077'.'
-          Caption = 'Kill ADB server when this application closing'
+          Caption = 'Kill ADB server when this app closing'
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -309,5 +402,18 @@ object GTTMainWnd: TGTTMainWnd
       Caption = 'actSMAppStop'
       OnExecute = actSMAppStopExecute
     end
+    object actSaveAppsList: TAction
+      Caption = 'actSaveAppsList'
+      OnExecute = actSaveAppsListExecute
+    end
+  end
+  object sdlg1: TSaveDialog
+    DefaultExt = 'txt'
+    Filter = 'Text file (*.txt)|*.txt|Any file (*.*)|*.*'
+    FilterIndex = 0
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
+    Title = 'Save apps list to file'
+    Left = 296
+    Top = 208
   end
 end

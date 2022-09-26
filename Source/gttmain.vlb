@@ -92,9 +92,6 @@ Coordinates=103,333,49,58
 [cbb1]
 Coordinates=280,221,101,124
 
-[GroupBox1]
-Coordinates=444,1,79,58
-
 [rg0]
 Coordinates=444,386,49,58
 
@@ -102,4 +99,7 @@ Coordinates=444,386,49,58
 ModelLayerNames=
 ActiveLayerNames=
 EditingLayerName=
+
+[grp5]
+Coordinates=444,1,79,58
 

@@ -31,7 +31,7 @@ type
     btn3: TButton;
     grp3: TGroupBox;
     grp4: TGroupBox;
-    GroupBox1: TGroupBox;
+    grp5: TGroupBox;
     btn4: TButton;
     cbb1: TComboBox;
     lbl2: TLabel;
@@ -47,6 +47,18 @@ type
     se2: TSpinEdit;
     chk2: TCheckBox;
     chk3: TCheckBox;
+    ts2: TTabSheet;
+    grp6: TGroupBox;
+    lst2: TListBox;
+    btn7: TButton;
+    grp7: TGroupBox;
+    lbl5: TLabel;
+    btn8: TButton;
+    btn9: TButton;
+    lbl6: TLabel;
+    lst3: TListBox;
+    actSaveAppsList: TAction;
+    sdlg1: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -66,6 +78,7 @@ type
     procedure se2Change(Sender: TObject);
     procedure chk2Click(Sender: TObject);
     procedure chk3Click(Sender: TObject);
+    procedure actSaveAppsListExecute(Sender: TObject);
   private
     { Private declarations }
     MyTasks, MyAppTasks: array [0..1] of ITask;
@@ -213,6 +226,7 @@ begin
       'Îøèáêà', MB_OK + MB_ICONSTOP);
   finally
     lst1.Items.Text := DevList.Text;
+    lst2.Items.Text := DevList.Text;
     Strout.Free;
     Stmout.Free;
   end;
@@ -248,8 +262,11 @@ begin
             btn2.Enabled := False;
             btn4.Enabled := False;
             btn5.Enabled := False;
+            btn7.Enabled := False;
+            btn8.Enabled := False;
             cbb1.Clear;
             cbb1.Enabled := False;
+            lst3.Clear;
             for I := 0 to DevList.Count - 1 do begin
               Stmout.Clear;
               Strout.Clear;
@@ -275,9 +292,12 @@ begin
             AppsList.Text := Strtempout.Text;
             cbb1.Items.Text := AppsList.Text;
             cbb1.Enabled := (cbb1.Items.Count > 0);
+            lst3.Items.Text := AppsList.Text;
             btn1.Enabled := True;
             btn2.Enabled := True;
             btn4.Enabled := True;
+            btn7.Enabled := True;
+            btn8.Enabled := True;
           finally
             Stmout.Free;
             Strout.Free;
@@ -298,8 +318,10 @@ begin
           btn2.Enabled := False;
           btn4.Enabled := False;
           btn5.Enabled := False;
+          btn8.Enabled := False;
           cbb1.Clear;
           cbb1.Enabled := False;
+          lst3.Clear;
           ExecuteCons(opts.path.adbc + ' -s ' + DevList.Strings[0] +
             ' shell pm list packages ' + opts.monkey.afcmd, '', '', nil, Stmout,
             5);
@@ -313,9 +335,12 @@ begin
             end else AppsList.Delete(I);
           cbb1.Items.Text := AppsList.Text;
           cbb1.Enabled := (cbb1.Items.Count > 0);
+          lst3.Items.Text := AppsList.Text;
           btn1.Enabled := True;
           btn2.Enabled := True;
           btn4.Enabled := True;
+          btn7.Enabled := True;
+          btn8.Enabled := True;
         finally
           Stmout.Free;
         end;
@@ -598,10 +623,23 @@ begin
   AppsList.Clear;
   cbb1.Clear;
   cbb1.ItemIndex := -1;
+  lst3.Clear;
   btn2.Enabled := DevList.Count > 0;
   btn4.Enabled := DevList.Count > 0;
   btn5.Enabled := cbb1.ItemIndex > -1;
+  btn8.Enabled := DevList.Count > 0;
   cbb1.Enabled := cbb1.Items.Count > 0;
+end;
+
+procedure TGTTMainWnd.actSaveAppsListExecute(Sender: TObject);
+begin
+  if sdlg1.Execute
+  then
+    try
+      lst3.Items.SaveToFile(sdlg1.FileName);
+    except
+      Application.MessageBox('Failed to save the apps list.', 'Error', MB_OK + MB_ICONSTOP);
+    end;
 end;
 
 procedure TGTTMainWnd.actSMAppExecute(Sender: TObject);
@@ -613,6 +651,8 @@ begin
   btn4.Enabled := False;
   btn5.Enabled := False;
   btn6.Enabled := True;
+  btn7.Enabled := False;
+  btn8.Enabled := False;
   cbb1.Enabled := False;
   chk3.Enabled := False;
   RefreshDevicesList;
@@ -626,6 +666,7 @@ begin
     AppsList.Clear;
     cbb1.Clear;
     cbb1.ItemIndex := -1;
+    lst3.Clear;
   end;
   btn1.Enabled := True;
   btn2.Enabled := DevList.Count > 0;
@@ -633,6 +674,7 @@ begin
   btn4.Enabled := DevList.Count > 0;
   btn5.Enabled := cbb1.ItemIndex > -1;
   btn6.Enabled := False;
+  btn7.Enabled := True;
   cbb1.Enabled := cbb1.Items.Count > 0;
   chk3.Enabled := True;
 end;
@@ -646,6 +688,8 @@ begin
   btn4.Enabled := False;
   btn5.Enabled := False;
   btn6.Enabled := False;
+  btn7.Enabled := False;
+  btn8.Enabled := False;
   cbb1.Enabled := False;
   chk2.Enabled := False;
   RefreshDevicesList;
@@ -659,6 +703,7 @@ begin
     AppsList.Clear;
     cbb1.Clear;
     cbb1.ItemIndex := -1;
+    lst3.Clear;
   end;
   btn1.Enabled := True;
   btn2.Enabled := DevList.Count > 0;
@@ -666,8 +711,9 @@ begin
   btn4.Enabled := DevList.Count > 0;
   btn5.Enabled := cbb1.ItemIndex > -1;
   btn6.Enabled := False;
+  btn7.Enabled := True;
+  btn8.Enabled := DevList.Count > 0;
   cbb1.Enabled := cbb1.Items.Count > 0;
-  chk2.Enabled := True;
 end;
 
 end.
